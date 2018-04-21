@@ -2,7 +2,7 @@
 
 const AWS = require('aws-sdk');
 
-const urls = require('../list');
+const { urls } = require('../config');
 
 const euCentralLambda = new AWS.Lambda({
   region: process.env.REGION,

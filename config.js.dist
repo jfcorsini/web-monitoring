@@ -1,0 +1,45 @@
+'use strict';
+
+/**
+ * The return of this function must follow the link below
+ * https://docs.aws.amazon.com/lambda/latest/dg/tutorial-scheduled-events-schedule-expressions.html
+ */
+const rate = () => 'rate(1 minute)';
+
+const urls = [
+  {
+    url: 'https://en-gb.facebook.com/login',
+    content: 'Log in to Facebook',
+  },
+  {
+    url: 'https://en-gb.facebook.com/login',
+    content: 'I want to make a log in',
+  },
+  {
+    url: 'https://en-gb.facebook.com/foofoobarbar',
+    content: 'Foo bar',
+  },
+  {
+    url: 'en-gb.bookface.com/login',
+    content: 'Log in to Facebook',
+  },
+];
+
+/**
+ * Chooses which stage this lambda function should be.
+ * Default is dev.
+ */
+const stage = () => 'dev';
+
+/**
+ * Chooses which region this lambda function should be stored on.
+ * Default is eu-central-1
+ */
+const region = () => 'eu-central-1';
+
+module.exports = {
+  stage,
+  region,
+  rate,
+  urls,
+};

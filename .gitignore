@@ -5,4 +5,4 @@ jspm_packages
 # Serverless directories
 .serverless
 
-list.js
+config.js
