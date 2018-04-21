@@ -1,15 +1,22 @@
 service: web-monitoring
 
+custom:
+  stage: dev
+  region: eu-central-1
+
 provider:
   name: aws
   runtime: nodejs6.10
-  region: eu-central-1
-  stage: dev
+  region: ${self:custom.region}
+  stage: ${self:custom.stage}
   iamRoleStatements:
     - Effect: Allow
       Action:
         - lambda:InvokeFunction
       Resource: "*"
+  environment:
+    STAGE: ${self:custom.stage}
+    REGION: ${self:custom.region}
 
 functions:
   requestUrl:

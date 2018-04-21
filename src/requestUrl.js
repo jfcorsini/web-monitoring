@@ -25,6 +25,7 @@ module.exports = (event, context) => {
 
       console.log({
         url,
+        content,
         status,
         totalTime,
       });
@@ -32,6 +33,7 @@ module.exports = (event, context) => {
     .catch(() => {
       console.log({
         url,
+        content,
         status: STATUS_SERVER_ERROR,
         totalTime: getMilisecondsDiffFromNow(time),
       });

@@ -5,13 +5,13 @@ const AWS = require('aws-sdk');
 const urls = require('../list');
 
 const euCentralLambda = new AWS.Lambda({
-  region: 'eu-central-1',
+  region: process.env.REGION,
 });
 
 module.exports = (event, context) => {
   urls.forEach((payload) => {
     const params = {
-      FunctionName: 'web-monitoring-dev-requestUrl',
+      FunctionName: `web-monitoring-${process.env.STAGE}-requestUrl`,
       InvocationType: 'RequestResponse',
       Payload: JSON.stringify(payload),
     };
