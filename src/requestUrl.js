@@ -7,6 +7,7 @@ module.exports = (event, context) => {
   const { url, content } = event;
 
   const time = process.hrtime();
+  const region = process.env.REGION;
   axios.get(url)
     .then((response) => {
       const totalTime = util.getMilisecondsDiffFromNow(time);
@@ -17,6 +18,7 @@ module.exports = (event, context) => {
         content,
         status,
         totalTime,
+        region,
       });
     })
     .catch((error) => {
@@ -28,6 +30,7 @@ module.exports = (event, context) => {
         content,
         status,
         totalTime,
+        region,
       });
     });
 };
