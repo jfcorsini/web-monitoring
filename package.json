@@ -5,6 +5,7 @@
   "main": "handler.js",
   "author": "João Fernando Corsini",
   "dependencies": {
+    "aws-sdk": "^2.226.1",
     "axios": "^0.18.0"
   },
   "devDependencies": {

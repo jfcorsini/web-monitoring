@@ -5,6 +5,11 @@ provider:
   runtime: nodejs6.10
   region: eu-central-1
   stage: dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda:InvokeFunction
+      Resource: "*"
 
 functions:
   requestUrl:

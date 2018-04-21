@@ -1,14 +1,25 @@
 'use strict';
 
-module.exports = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Scrape function was executed!',
-      input: event,
-    }),
-  };
-  console.log('Method scrape was called');
+const AWS = require('aws-sdk');
 
-  callback(null, response);
+const urls = require('../list');
+
+const euCentralLambda = new AWS.Lambda({
+  region: 'eu-central-1',
+});
+
+module.exports = (event, context) => {
+  urls.forEach((payload) => {
+    const params = {
+      FunctionName: 'web-monitoring-dev-requestUrl',
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify(payload),
+    };
+
+    return euCentralLambda.invoke(params, (err) => {
+      if (err) {
+        console.debug('Error when invoking', err, err.stack);
+      }
+    });
+  });
 };
