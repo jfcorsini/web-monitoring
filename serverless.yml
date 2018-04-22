@@ -23,3 +23,7 @@ functions:
     description: Iterate over a list urls at a set interval, defined on the schedule rate
     events:
       - schedule: ${file(./config.js):rate}
+
+package:
+  exclude:
+    - tests/**

@@ -2,10 +2,6 @@
 
 const AWS = require('aws-sdk');
 
-const lambda = new AWS.Lambda({
-  region: process.env.REGION,
-});
-
 /**
  * This method receives an array of URLs and content to be found on that page.
  * For each of these, a lambda function will be invoked to scrape and process it.
@@ -13,6 +9,10 @@ const lambda = new AWS.Lambda({
  * @param {Array} urls - [{url: string, content: string}]
  */
 const scrape = (urls) => {
+  const lambda = new AWS.Lambda({
+    region: process.env.REGION,
+  });
+
   urls.forEach((payload) => {
     const params = {
       FunctionName: `web-monitoring-${process.env.STAGE}-requestUrl`,
@@ -20,9 +20,9 @@ const scrape = (urls) => {
       Payload: JSON.stringify(payload),
     };
 
-    return lambda.invoke(params, (err) => {
+    lambda.invoke(params, (err) => {
       if (err) {
-        console.debug('Error when invoking', err, err.stack);
+        console.log('Error when invoking', err, err.stack);
       }
     });
   });

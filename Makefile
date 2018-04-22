@@ -37,3 +37,8 @@ logs:           ## Read logs
 logs:
 	@echo Reading logs
 	serverless logs -f requestUrl -t
+
+tests:           ## Run test suit
+tests:
+	@echo Running tests
+	npm run tests

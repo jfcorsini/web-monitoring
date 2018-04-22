@@ -12,14 +12,17 @@ const lib = require('../lib');
  * @param {String} status
  * @param {String} totalTime
  */
-const logInformation = (url, content, status, totalTime) => {
-  console.log({
+const logAndReturn = (url, content, status, totalTime) => {
+  const params = {
     url,
     content,
     status,
     totalTime,
     region: process.env.REGION,
-  });
+  };
+
+  console.log(params);
+  return params;
 };
 
 /**
@@ -33,18 +36,18 @@ const logInformation = (url, content, status, totalTime) => {
 const requestUrl = (url, content) => {
   const time = process.hrtime();
 
-  axios.get(url)
+  return axios.get(url)
     .then((response) => {
       const totalTime = lib.getMilisecondsDiffFromNow(time);
       const status = lib.getStatusBasedOnResponse(response, content);
 
-      logInformation(url, content, status, totalTime);
+      return logAndReturn(url, content, status, totalTime);
     })
     .catch((error) => {
       const totalTime = lib.getMilisecondsDiffFromNow(time);
       const status = lib.getStatusBasedOnError(error);
 
-      logInformation(url, content, status, totalTime);
+      return logAndReturn(url, content, status, totalTime);
     });
 };
 
