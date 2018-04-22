@@ -2,13 +2,17 @@
 
 const AWS = require('aws-sdk');
 
-const { urls } = require('../config');
-
-const euCentralLambda = new AWS.Lambda({
+const lambda = new AWS.Lambda({
   region: process.env.REGION,
 });
 
-module.exports = (event, context) => {
+/**
+ * This method receives an array of URLs and content to be found on that page.
+ * For each of these, a lambda function will be invoked to scrape and process it.
+ *
+ * @param {Array} urls - [{url: string, content: string}]
+ */
+const scrape = (urls) => {
   urls.forEach((payload) => {
     const params = {
       FunctionName: `web-monitoring-${process.env.STAGE}-requestUrl`,
@@ -16,10 +20,12 @@ module.exports = (event, context) => {
       Payload: JSON.stringify(payload),
     };
 
-    return euCentralLambda.invoke(params, (err) => {
+    return lambda.invoke(params, (err) => {
       if (err) {
         console.debug('Error when invoking', err, err.stack);
       }
     });
   });
 };
+
+module.exports = scrape;
